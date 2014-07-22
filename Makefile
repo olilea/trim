@@ -11,7 +11,7 @@ EXECUTABLE=bin/trim
 
 SRCS=	src/trim.c\
         src/tests.c\
-        src/file_operations.c
+        src/fileOperations.c
 
 all:	main
 		@echo "Build complete"

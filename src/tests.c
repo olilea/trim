@@ -1,9 +1,8 @@
 #include <ncurses.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "tests.h"
-#include "file_operations.h"
+#include "fileOperations.h"
 
 void
 test1(void) {
@@ -90,5 +89,30 @@ test4(void) {
         prev = ch;
     }
     getch();
-    fclose(fp);
+    closeFile(fp);
+}
+
+void
+test5(void) {
+    int row, col, y, x, ch;
+    BufferedFile *bf = openFileToBuffer("hello.c", "r");
+    char *bufferIndex = bf->buffer;
+    ch = *bufferIndex;
+    getmaxyx(stdscr, row, col);
+
+    while (ch != '\0') {
+        getyx(stdscr, y, x);
+        if (y == row - 1) {
+            printw("<-Press Any Key->");
+            refresh();
+            getch();
+            clear();
+            move(0, 0);
+        } else {
+            printw("%c", ch);
+        }
+        ch = *(++bufferIndex);
+    }
+    getch();
+    closeFile(bf->fp);
 }

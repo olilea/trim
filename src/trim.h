@@ -1,13 +1,10 @@
 #ifndef TRIM_H
 #define TRIM_H
 
-FILE *openFile(char *fileName, char *mode);
+void initCurses(void);
 
-int initCurses(void);
-
-int deinitCurses(void);
+void deinitCurses(void);
 
 int main(int argc, char *argv[]);
 
 #endif
-
