@@ -9,7 +9,9 @@ FLAGS=	-Wall\
 
 EXECUTABLE=bin/trim
 
-SRCS=	src/trim.c
+SRCS=	src/trim.c\
+        src/tests.c\
+        src/file_operations.c
 
 all:	main
 		@echo "Build complete"
