@@ -1,13 +1,7 @@
 #ifndef FILE_OPERATIONS_H
 #define FILE_OPERATIONS_H
 
-typedef struct {
-	char *fileName;
-	char *mode;
-	FILE *fp;
-	long length;
-	char *buffer;
-} BufferedFile;
+#include "fileStructs.h"
 
 FILE *openFile(char *fileName, char *mode);
 

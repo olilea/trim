@@ -1,8 +1,9 @@
 #include <ncurses.h>
 #include <string.h>
 
-#include "tests.h"
 #include "fileOperations.h"
+#include "fileStructs.h"
+#include "tests.h"
 
 void
 test1(void) {

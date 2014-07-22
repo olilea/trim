@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "fileOperations.h"
 #include "trim.h"
+#include "fileStructs.h"
+#include "fileOperations.h"
 
 FILE *
 openFile(char *fileName, char *mode) {

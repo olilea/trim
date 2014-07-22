@@ -2,8 +2,11 @@
 #include <string.h>
 #include <ncurses.h>
 
-#include "trim.h"
 #include "tests.h"
+#include "outputOperations.h"
+#include "fileStructs.h"
+#include "fileOperations.h"
+#include "trim.h"
 
 void
 initCurses(void) {
@@ -29,7 +32,9 @@ main(int argc, char *argv[]) {
     //test2();
     //test3();
     //test4();
-    test5();
+    //test5();
+    BufferedFile *bf = openFileToBuffer("hello.c", "r");
+    writeBufferedFileToWindow(stdscr, bf);
 
     deinitCurses();
 
