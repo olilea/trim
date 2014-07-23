@@ -1,5 +1,5 @@
-#ifndef FILE_OPERATIONS_H
-#define FILE_OPERATIONS_H
+#ifndef FILEOPERATIONS_H
+#define FILEOPERATIONS_H
 
 #include "fileStructs.h"
 
