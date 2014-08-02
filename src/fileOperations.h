@@ -1,7 +1,7 @@
 #ifndef FILEOPERATIONS_H
 #define FILEOPERATIONS_H
 
-#include "fileStructs.h"
+#include "file.h"
 
 FILE *openFile(char *fileName, char *mode);
 

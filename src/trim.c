@@ -6,7 +6,7 @@
 #include "global.h"
 #include "tests.h"
 #include "outputOperations.h"
-#include "fileStructs.h"
+#include "file.h"
 #include "fileOperations.h"
 #include "trim.h"
 
@@ -16,19 +16,24 @@
 volatile int rows;
 volatile int cols;
 
-WINDOW *trimWindow;
-WINDOW *commandlineWindow;
+TWINDOW *trimWindow;
+TWINDOW *commandlineWindow;
+TWINDOW *sidebarWindow;
 
 void
 deinitCurses(void) {
+    tdelwin(trimWindow);
+    tdelwin(commandlineWindow);
+    tdelwin(sidebarWindow);
     endwin();                       /* End curses mode                      */
 }
 
 void
 initMainWindows(void) {
 
-    trimWindow = createNewWin(rows, cols, 0, 0);
-    commandlineWindow = createNewWin(COMMANDLINE_HEIGHT, cols, rows - COMMANDLINE_HEIGHT, 0);
+    trimWindow = tnewwin(rows - 1, cols - 1, 0, 1);
+    commandlineWindow = tnewwin(COMMANDLINE_HEIGHT, cols, rows - COMMANDLINE_HEIGHT, 0);
+    sidebarWindow = tnewwin(rows - 1, 1, 0, 0);
 }
 
 void
@@ -46,27 +51,14 @@ initCurses(void) {
 }
 
 void
-sigHandler(int sig) {
-    if (sig == SIGWINCH) {
-        deinitCurses();
-        initCurses();
-        refresh();
-    } else {
-        exit(sig);
-    }
-}
-
-void
 init(void) {
-    //signal(SIGWINCH, sigHandler);
-
     initCurses();
 }
 
 void
 processCommand(char *inputString) {
-    mvwprintw(trimWindow, 0, 0, inputString);
-    wrefresh(trimWindow);
+    wprintw(trimWindow->window, inputString);
+    wrefresh(trimWindow->window);
 }
 
 int
@@ -79,13 +71,14 @@ main(int argc, char *argv[]) {
     //test3();
     //test4();
     //test5();
-    //BufferedFile *bf = openFileToBuffer("hello.c", "r");
-    //writeBufferedFileToWindow(stdscr, bf);
+    BufferedFile *bf = openFileToBuffer("hello.c", "r");
+    writeBufferedFileToWindow(trimWindow, bf);
+
 
     char input[cols];
     echo();
     while (1) {
-        if (mvwgetnstr(commandlineWindow, 0, 0, input, cols - 1) == ERR) {
+        if (mvwgetnstr(commandlineWindow->window, 0, 0, input, cols - 1) == ERR) {
             continue;
         }
         processCommand(input);

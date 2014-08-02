@@ -1,8 +1,9 @@
 #ifndef OUTPUTOPERATIONS_H
 #define OUTPUTOPERATIONS_H
 
-#include "fileStructs.h"
+#include "curses/window.h"
+#include "file.h"
 
-void writeBufferedFileToWindow(WINDOW *window, BufferedFile *bf);
+void writeBufferedFileToWindow(TWINDOW *window, BufferedFile *bf);
 
 #endif

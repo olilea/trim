@@ -1,5 +1,5 @@
-#ifndef FILESTRUCTS_H
-#define FILESTRUCTS_H
+#ifndef FILE_H
+#define FILE_H
 
 typedef struct {
 	char *fileName;

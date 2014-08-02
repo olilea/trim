@@ -1,19 +1,35 @@
 #include <ncurses.h>
+#include <stdlib.h>
 
+#include "../global.h"
 #include "window.h"
 
-WINDOW *
-createNewWin(int height, int width, int starty, int startx) {
+TWINDOW *
+tnewwin(int height, int width, int starty, int startx) {
 
-	WINDOW *win;
-	win = newwin(height, width, starty, startx);
-	box(win, 0, 0);
-	wrefresh(win);
+	TWINDOW *twin = (TWINDOW *)malloc(sizeof(TWINDOW));
+	if ((twin->window = newwin(height, width, starty, startx)) == NULL) {
+		free(twin);
+		return NULL;
+	}
+	twin->buffer = (char *)malloc(sizeof(char) * TWIN_BUFFER_SIZE);
+	twin->rows = height;
+	twin->cols = width;
 
-	return win;
+	#ifdef DEBUG
+	box(twin->window, 0, 0);
+	#endif
+	wrefresh(twin->window);
+
+	return twin;
 }
 
-void
-destroyWin(WINDOW *window) {
-	delwin(window);
+int
+tdelwin(TWINDOW *twin) {
+	if (delwin(twin->window) == ERR) {
+		return ERR;
+	}
+	free(twin->buffer);
+	free(twin);
+	return OK;
 }

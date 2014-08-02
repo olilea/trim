@@ -1,10 +1,15 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define COMMANDLINE_HEIGHT 1
+#include "curses/window.h"
 
-extern WINDOW *trimWindow;
-extern WINDOW *commandlineWindow;
+#define DEBUG 1
+
+#define COMMANDLINE_HEIGHT 1
+#define TWIN_BUFFER_SIZE 1024
+
+extern TWINDOW *trimWindow;
+extern TWINDOW *commandlineWindow;
 
 extern volatile int rows;
 extern volatile int cols;

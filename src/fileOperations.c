@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "trim.h"
-#include "fileStructs.h"
+#include "file.h"
 #include "fileOperations.h"
 
 FILE *

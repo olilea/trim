@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "fileOperations.h"
-#include "fileStructs.h"
+#include "file.h"
 #include "tests.h"
 
 void

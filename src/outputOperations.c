@@ -1,26 +1,48 @@
 #include <ncurses.h>
 
 #include "fileOperations.h"
-#include "fileStructs.h"
+#include "file.h"
 #include "outputOperations.h"
 
 void
-writeBufferedFileToWindow(WINDOW *window, BufferedFile *bf) {
-    int row, col, y, x, ch;
+writeBufferFileToWindow(TWINDOW *twin, BufferedFile *bf) {
+    WINDOW *window = twin->window;
+    int winRows = twin->rows;
+    int y, x, ch;
     char *bufferIndex = bf->buffer;
     ch = *bufferIndex;
-    getmaxyx(stdscr, row, col);
+    wmove(window, 0, 0);
 
     while (ch != '\0') {
-        getyx(stdscr, y, x);
-        if (y == row - 1) {
-            printw("<-Press Any Key->");
-            refresh();
-            getch();
-            clear();
-            move(0, 0);
+        getyx(window, y, x);
+        if (y != winRows - 1) {
+            wprintw(window, "%c", ch);
         } else {
-            printw("%c", ch);
+            break;
+        }
+        ch = *(++bufferIndex);
+    }
+}
+
+void
+showBufferedFile(TWINDOW *twin, BufferedFile *bf) {
+    WINDOW *window = twin->window;
+    int winRows = twin->rows;
+    int y, x, ch;
+    char *bufferIndex = bf->buffer;
+    ch = *bufferIndex;
+    wmove(window, 0, 0);
+
+    while (ch != '\0') {
+        getyx(window, y, x);
+        if (y == winRows - 1) {
+            wprintw(window, "<-Press Any Key->");
+            wrefresh(window);
+            wgetch(window);
+            wclear(window);
+            wmove(window, 0, 0);
+        } else {
+            wprintw(window, "%c", ch);
         }
         ch = *(++bufferIndex);
     }
