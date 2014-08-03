@@ -10,7 +10,7 @@
 #include "fileOperations.h"
 #include "trim.h"
 
-#include "curses/window.h"
+#include "tcurses.h"
 
 // As defined in global.h with extern visibility
 volatile int rows;
@@ -33,6 +33,7 @@ initMainWindows(void) {
 
     trimWindow = tnewwin(rows - 1, cols - 1, 0, 1);
     commandlineWindow = tnewwin(COMMANDLINE_HEIGHT, cols, rows - COMMANDLINE_HEIGHT, 0);
+    tmvwaddch(commandlineWindow, 0, 0, '~');
     sidebarWindow = tnewwin(rows - 1, 1, 0, 0);
 }
 
@@ -72,13 +73,13 @@ main(int argc, char *argv[]) {
     //test4();
     //test5();
     BufferedFile *bf = openFileToBuffer("hello.c", "r");
-    writeBufferedFileToWindow(trimWindow, bf);
+    showBufferedFile(trimWindow, bf);
 
 
     char input[cols];
     echo();
     while (1) {
-        if (mvwgetnstr(commandlineWindow->window, 0, 0, input, cols - 1) == ERR) {
+        if (mvwgetnstr(commandlineWindow->window, 0, 1, input, cols - 1) == ERR) {
             continue;
         }
         processCommand(input);

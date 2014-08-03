@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#include "curses/window.h"
+#include "tcurses.h"
 
 #define DEBUG 1
 
@@ -10,6 +10,7 @@
 
 extern TWINDOW *trimWindow;
 extern TWINDOW *commandlineWindow;
+extern TWINDOW *sidebarWindow;
 
 extern volatile int rows;
 extern volatile int cols;

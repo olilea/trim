@@ -13,7 +13,7 @@ SRCS=	src/trim.c\
         src/tests.c\
         src/fileOperations.c\
         src/outputOperations.c\
-        src/curses/window.c
+        src/tcurses.c
 
 all:	main
 		@echo "Build complete"

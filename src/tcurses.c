@@ -1,8 +1,19 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
-#include "../global.h"
-#include "window.h"
+#include "global.h"
+#include "tcurses.h"
+
+int
+tmvwaddch(TWINDOW *twin, int y, int x, char ch) {
+	return mvwaddch(twin->window, y, x, ch);
+}
+
+int
+tmvwprintw(TWINDOW *twin, int y, int x, char *string) {
+	return mvwprintw(twin->window, y, x, string);
+
+}
 
 TWINDOW *
 tnewwin(int height, int width, int starty, int startx) {

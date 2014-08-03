@@ -5,7 +5,7 @@
 #include "outputOperations.h"
 
 void
-writeBufferFileToWindow(TWINDOW *twin, BufferedFile *bf) {
+writeBufferedFileToWindow(TWINDOW *twin, BufferedFile *bf) {
     WINDOW *window = twin->window;
     int winRows = twin->rows;
     int y, x, ch;
@@ -35,16 +35,11 @@ showBufferedFile(TWINDOW *twin, BufferedFile *bf) {
 
     while (ch != '\0') {
         getyx(window, y, x);
-        if (y == winRows - 1) {
-            wprintw(window, "<-Press Any Key->");
-            wrefresh(window);
-            wgetch(window);
-            wclear(window);
-            wmove(window, 0, 0);
-        } else {
+        if (y != winRows - 1) {
             wprintw(window, "%c", ch);
         }
         ch = *(++bufferIndex);
     }
-    getch();
+    wmove(window, 0, 0);
+    wrefresh(window);
 }
