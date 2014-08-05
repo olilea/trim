@@ -35,12 +35,12 @@ showBufferedFile(TWINDOW *twin, BufferedFile *bf) {
     wmove(window, 0, 0);
 
     while (ch != '\0') {
-        if (ch == 'LF') {
-            lines++;
-        }
         getyx(window, y, x);
         if (y != winRows - 1) {
             wprintw(window, "%c", ch);
+        }
+        if (ch == '\n') {
+            lines++;
         }
         ch = *(++bufferIndex);
     }
