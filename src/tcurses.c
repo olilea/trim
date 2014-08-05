@@ -15,6 +15,36 @@ tmvwprintw(TWINDOW *twin, int y, int x, char *string) {
 
 }
 
+int twresize(TWINDOW *twin, int rows, int cols) {
+	return wresize(twin->window, rows, cols);
+}
+
+int twrefresh(TWINDOW *twin) {
+	return wrefresh(twin->window);
+}
+
+// @TODO
+// Refreshes the sidebar with the linecount
+int addLineCount(unsigned int lines) {
+	// Inittializes all elements to zero
+	TWINDOW *twin = sidebarWindow;
+
+	char *longString = { 0 };
+	unsigned int i;
+	for (i = 0; i < lines; ++i) {
+		if (i >= twin->rows) {
+			break;
+		}
+		sprintf(longString, "%u", i);
+		if (sizeof(longString) > twin->cols) {
+			twresize(twin, twin->rows, twin->cols);
+		}
+		tmvwprintw(twin, i, 0, longString);
+	}
+
+	return twrefresh(twin);
+}
+
 TWINDOW *
 tnewwin(int height, int width, int starty, int startx) {
 

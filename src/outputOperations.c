@@ -31,9 +31,13 @@ showBufferedFile(TWINDOW *twin, BufferedFile *bf) {
     int y, x, ch;
     char *bufferIndex = bf->buffer;
     ch = *bufferIndex;
+    unsigned int lines = 0;
     wmove(window, 0, 0);
 
     while (ch != '\0') {
+        if (ch == 'LF') {
+            lines++;
+        }
         getyx(window, y, x);
         if (y != winRows - 1) {
             wprintw(window, "%c", ch);
@@ -42,4 +46,5 @@ showBufferedFile(TWINDOW *twin, BufferedFile *bf) {
     }
     wmove(window, 0, 0);
     wrefresh(window);
+    addLineCount(lines);
 }
